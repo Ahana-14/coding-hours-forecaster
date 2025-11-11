@@ -1,14 +1,33 @@
-{
-  "name": "coding-hours-forecaster-app",
-  "private": true,
-  "version": "0.1.0",
-  "scripts": {
-    "setup": "npm --prefix backend i && npm --prefix frontend i",
-    "dev": "concurrently -k -n backend,frontend -c blue,magenta \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
-    "build": "npm --prefix frontend run build",
-    "lint": "echo 'Add ESLint later'"
-  },
-  "devDependencies": {
-    "concurrently": "^9.2.1"
-  }
+﻿{
+    "name":  "coding-hours-forecaster-app",
+    "private":  true,
+    "version":  "0.1.0",
+    "scripts":  {
+                    "setup":  "npm --prefix backend i \u0026\u0026 npm --prefix frontend i",
+                    "dev":  "vite",
+                    "build":  "npm --prefix frontend run build",
+                    "lint":  "echo \u0027Add ESLint later\u0027"
+                },
+    "devDependencies":  {
+                            "concurrently":  "^9.2.1",
+                            "vite":  "^7.2.2"
+                        },
+    "dependencies":  {
+                         "coding-hours-forecaster-app":  "file:"
+                     },
+    "description":  "\u003c\u003c\u003c\u003c\u003c\u003c\u003c HEAD\r # Coding Hours Forecaster â€” Full-Stack App",
+    "main":  "index.js",
+    "repository":  {
+                       "type":  "git",
+                       "url":  "git+https://github.com/Ahana-14/coding-hours-forecaster.git"
+                   },
+    "keywords":  [
+
+                 ],
+    "author":  "",
+    "license":  "ISC",
+    "bugs":  {
+                 "url":  "https://github.com/Ahana-14/coding-hours-forecaster/issues"
+             },
+    "homepage":  "https://github.com/Ahana-14/coding-hours-forecaster#readme"
 }

@@ -47,10 +47,23 @@ function checkMongoConnection() {
 // Connect to MongoDB
 async function start() {
   try {
-    // Try to connect to MongoDB first
+  // If DATABASE_URL is not provided, allow an opt-in to start without DB.
+  // For developer convenience, if NODE_ENV is not 'production' we'll allow starting
+  // without a DB so the frontend can be developed without installing MongoDB.
+  const isDev = (process.env.NODE_ENV || 'development') !== 'production';
+  const allowNoDb = process.env.ALLOW_NO_DB === 'true' || isDev;
+
     if (!DATABASE_URL) {
+      if (allowNoDb) {
+        console.warn('⚠️ WARNING: DATABASE_URL not set. Starting server without MongoDB (ALLOW_NO_DB=true)');
+        app.listen(PORT, '0.0.0.0', () => {
+          console.log(`✅ API listening on http://0.0.0.0:${PORT}`);
+          console.log('⚠️ Server started without database. DB-dependent endpoints will return errors.');
+        });
+        return;
+      }
       console.error('❌ ERROR: DATABASE_URL not set in .env file');
-      console.error('❌ Please set DATABASE_URL in backend/.env');
+      console.error('❌ Please set DATABASE_URL in backend/.env or set ALLOW_NO_DB=true to bypass');
       process.exit(1);
     }
 
@@ -68,10 +81,18 @@ async function start() {
       });
     } catch (dbErr) {
       console.error('❌ Failed to connect to MongoDB:', dbErr.message);
+      if (allowNoDb) {
+        console.warn('⚠️ ALLOW_NO_DB=true — starting server without MongoDB despite connection failure');
+        app.listen(PORT, '0.0.0.0', () => {
+          console.log(`✅ API listening on http://0.0.0.0:${PORT}`);
+          console.log('⚠️ Server started without database. DB-dependent endpoints will return errors.');
+        });
+        return;
+      }
       console.error('');
       console.error('💡 Solutions:');
       console.error('   1. Make sure MongoDB is installed and running');
-      console.error('   2. For Windows: Run "net start MongoDB"');
+      console.error('   2. For Windows: Run "net start MongoDB" (requires admin)');
       console.error('   3. Or use MongoDB Atlas (cloud): Update DATABASE_URL in .env');
       console.error('   4. Check your DATABASE_URL format in backend/.env');
       console.error('');
@@ -339,3 +360,5 @@ app.post('/api/forecast', authMiddleware, async (req, res) => {
 });
 
 start();
+
+
