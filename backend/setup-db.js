@@ -7,10 +7,19 @@ import Log from './src/models/Log.js';
 
 dotenv.config();
 
-const DATABASE_URL = process.env.DATABASE_URL || 'mongodb://localhost:27017/coding_hours_db';
+const DATABASE_URL = process.env.DATABASE_URL || '';
+const ALLOW_NO_DB = process.env.ALLOW_NO_DB === 'true' || !!process.env.RENDER;
 
 async function setupDatabase() {
   try {
+    if (!DATABASE_URL) {
+      if (ALLOW_NO_DB) {
+        console.warn('⚠️ Skipping DB setup: DATABASE_URL not set and ALLOW_NO_DB=true');
+        return;
+      }
+      console.error('❌ DATABASE_URL not set. Set it or enable ALLOW_NO_DB=true to skip.');
+      process.exit(1);
+    }
     console.log('🔌 Connecting to MongoDB...');
     await mongoose.connect(DATABASE_URL);
     console.log('✅ Connected to MongoDB');

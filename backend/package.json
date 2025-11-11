@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "setup-db.js",
+  "main": "src/server.js",
   "scripts": {
     "dev": "cross-env ALLOW_NO_DB=true node src/server.js",
     "start": "node src/server.js",
+    "db:setup": "node setup-db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
