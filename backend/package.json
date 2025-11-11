@@ -4,13 +4,12 @@
   "type": "module",
   "main": "setup-db.js",
   "scripts": {
-    "dev": "node src/server.js",
+    "dev": "cross-env ALLOW_NO_DB=true node src/server.js",
     "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "coding-hours-forecaster-app": "file:..",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",

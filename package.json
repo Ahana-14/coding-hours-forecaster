@@ -4,7 +4,7 @@
     "version":  "0.1.0",
     "scripts":  {
                     "setup":  "npm --prefix backend i \u0026\u0026 npm --prefix frontend i",
-                    "dev":  "vite",
+                    "dev":  "concurrently -n backend,frontend -c green,cyan \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
                     "build":  "npm --prefix frontend run build",
                     "lint":  "echo \u0027Add ESLint later\u0027"
                 },
@@ -12,10 +12,8 @@
                             "concurrently":  "^9.2.1",
                             "vite":  "^7.2.2"
                         },
-    "dependencies":  {
-                         "coding-hours-forecaster-app":  "file:"
-                     },
-    "description":  "\u003c\u003c\u003c\u003c\u003c\u003c\u003c HEAD\r # Coding Hours Forecaster â€” Full-Stack App",
+    "dependencies":  {},
+    "description":  "Coding Hours Forecaster Full-Stack App",
     "main":  "index.js",
     "repository":  {
                        "type":  "git",
